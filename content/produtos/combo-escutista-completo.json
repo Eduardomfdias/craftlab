@@ -1,12 +1,12 @@
 {
   "nome": "Combo Escutista Completo",
   "descricao": "Anilha + Porta-chaves + Pulseira",
-  "descricaoLonga": "O pack completo para qualquer escuteiro. Inclui anilha escutista, porta-chaves náutico e pulseira de corda. Preço especial de conjunto.",
+  "descricaoLonga": "O pack completo para qualquer escuteiro com peças em corda 100% poliéster de alta qualidade. Inclui anilha escutista, porta-chaves náutico e pulseira de corda com nó perfeito. Preço especial de conjunto.",
   "preco": 15.00,
   "categoria": "combos",
   "tag": "Oferta",
   "stock": 5,
   "destaque": true,
   "disponivel": true,
-  "fotos": ["https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800&auto=format&fit=crop"]
+  "fotos": ["/produtos/scout_hero.png"]
 }

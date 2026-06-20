@@ -229,9 +229,21 @@ export default function EncomendaPage() {
                   style={{ ...inputStyle, resize: "vertical" }} />
               </div>
 
-              <p style={{ fontFamily: T.sans, fontSize: "0.72rem", fontWeight: 300, color: P.muted, lineHeight: 1.7 }}>
-                Após enviar, confirmaremos contigo antes de cobrar qualquer valor.
-              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div style={{ background: `${P.primary}10`, padding: "1.25rem", borderLeft: `3px solid ${P.primary}` }}>
+                  <p style={{ fontFamily: T.sans, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: P.primary, marginBottom: "0.5rem", fontWeight: 600 }}>Como funciona o pagamento?</p>
+                  <p style={{ fontFamily: T.sans, fontSize: "0.8rem", fontWeight: 300, color: P.earth, lineHeight: 1.6 }}>
+                    Como as nossas peças são artesanais, a tua encomenda é validada manualmente após o envio deste formulário. Quando o teu pedido estiver pronto para ser enviado, entraremos em contacto para acertar os detalhes do pagamento (MBWay ou Transferência). Não pagas nada agora!
+                  </p>
+                </div>
+
+                <div style={{ background: `${P.primary}10`, padding: "1.25rem", borderLeft: `3px solid ${P.primary}` }}>
+                  <p style={{ fontFamily: T.sans, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: P.primary, marginBottom: "0.5rem", fontWeight: 600 }}>Fazem pedidos personalizados?</p>
+                  <p style={{ fontFamily: T.sans, fontSize: "0.8rem", fontWeight: 300, color: P.earth, lineHeight: 1.6 }}>
+                    Sim! Mesmo que não tenhamos a cor ou a peça específica no catálogo atual, conseguimos fazer produtos totalmente personalizados para ti. Basta deixares as tuas ideias na caixa de notas. Pedimos apenas compreensão para com o tempo extra necessário para a sua confeção artesanal.
+                  </p>
+                </div>
+              </div>
 
               {/* ─── Botões de envio ─── */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>

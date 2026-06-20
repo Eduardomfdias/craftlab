@@ -24,33 +24,33 @@ const T = {
 const steps = [
   {
     n: "01",
-    title: "Escolha da Corda",
-    body: "Selecionamos corda de algodão 100% natural, torcida à mão em Portugal. A qualidade do material é o primeiro passo para uma peça que dura.",
-    img: "https://images.unsplash.com/photo-1620735692151-26a7e0748429?q=80&w=800&auto=format&fit=crop",
+    title: "O Material Certo",
+    body: "Usamos corda 100% poliéster de qualidade. Com materiais fracos, os nós nunca ficam perfeitos e as peças acabam por ficar mal acabadas. A resistência é chave.",
+    img: "/produtos/scout_hero.png",
   },
   {
     n: "02",
-    title: "O Nó — a Alma da Peça",
-    body: "Cada nó é dado à mão, com técnicas herdadas do escutismo náutico. Um nó mal dado nota-se. Por isso cada anilha passa por controlo de qualidade antes de sair.",
-    img: "https://images.unsplash.com/photo-1599640842225-85d111c60e6b?q=80&w=800&auto=format&fit=crop",
+    title: "O Nó",
+    body: "Cada nó é dado à mão com extrema dedicação e rigor técnico. Esta precisão garante que a peça mantém a sua forma perfeita e nunca se desfaz com o tempo.",
+    img: "/produtos/scout_process.png",
   },
   {
     n: "03",
     title: "Personalização",
-    body: "Cores, tamanhos, símbolos de grupo — tudo é possível. Trabalhamos contigo para criar algo único que conta a tua história.",
-    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop",
+    body: "Cores, tamanhos ou símbolos específicos: tudo é possível. Trabalhamos contigo para criar algo único que conta a tua história.",
+    img: "/produtos/scout_anilha.png",
   },
   {
     n: "04",
-    title: "Embalagem & Envio",
-    body: "Cada peça é embalada com cuidado, com uma nota escrita à mão. Enviamos para todo o país com transportadora de confiança.",
-    img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800&auto=format&fit=crop",
+    title: "Embalagem e Envio",
+    body: "Cada peça é embalada com cuidado, acompanhada de uma nota escrita à mão. O envio é feito para todo o país através do correio nacional.",
+    img: "/produtos/scout_keychain.png",
   },
 ];
 
 const values = [
   { icon: "⌀", label: "Artesanato Real", desc: "Sem máquinas. Sem atalhos. Cada peça é feita do início ao fim pelas nossas mãos." },
-  { icon: "♻", label: "Materiais Naturais", desc: "Algodão natural, corantes seguros e embalagem reciclável." },
+  { icon: "✧", label: "Qualidade do Material", desc: "Poliéster de alta resistência para nós perfeitamente acabados e uma peça que dura." },
   { icon: "✦", label: "Identidade Escutista", desc: "Nascemos no escutismo e é isso que nos distingue. Os nós têm significado." },
 ];
 
@@ -61,7 +61,7 @@ export default function SobrePage() {
       {/* ── HERO ─────────────────────────────────────── */}
       <section style={{ paddingTop: 96, position: "relative", background: P.dark, minHeight: 480, display: "flex", alignItems: "center" }}>
         <img
-          src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1920&auto=format&fit=crop"
+          src="/produtos/scout_process.png"
           alt="O Processo"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.18) saturate(0.5)" }}
         />

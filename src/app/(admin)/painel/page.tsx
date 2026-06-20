@@ -81,11 +81,12 @@ export default function PainelPage() {
   const salvar = async () => {
     setSaving(true);
     if (editando) {
-      await fetch(`/api/admin/produtos/${editando.slug}`, {
+      const res = await fetch(`/api/admin/produtos/${editando.slug}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+      if (!res.ok) { const d = await res.json().catch(() => ({})); flash(d.error ?? "Erro ao guardar"); setSaving(false); return; }
       flash("Guardado!");
     } else {
       const res = await fetch("/api/admin/produtos", {
@@ -93,7 +94,7 @@ export default function PainelPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
-      if (!res.ok) { const d = await res.json(); flash(d.error ?? "Erro"); setSaving(false); return; }
+      if (!res.ok) { const d = await res.json().catch(() => ({})); flash(d.error ?? "Erro"); setSaving(false); return; }
       flash("Produto criado!");
     }
     setSaving(false);

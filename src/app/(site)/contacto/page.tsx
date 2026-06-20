@@ -104,13 +104,13 @@ export default function ContactoPage() {
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", marginBottom: "3rem" }}>
-              <a href="mailto:hello@craftlab.ed" style={{ display: "flex", alignItems: "center", gap: "0.875rem", textDecoration: "none" }}>
-                <div style={{ width: 40, height: 40, background: P.primary, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                  <Mail size={15} color="#fff" />
+              <a href="mailto:craftlab.ed@gmail.com" style={{ display: "flex", alignItems: "center", gap: "0.875rem", textDecoration: "none" }}>
+                <div style={{ width: 48, height: 48, borderRadius: "50%", background: `${P.primary}12`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <Mail size={20} style={{ color: P.primary }} />
                 </div>
                 <div>
-                  <p style={{ fontFamily: T.sans, fontSize: "0.58rem", letterSpacing: "0.2em", textTransform: "uppercase", color: P.muted, marginBottom: "0.15rem" }}>Email</p>
-                  <p style={{ fontFamily: T.sans, fontSize: "0.88rem", color: P.earth }}>hello@craftlab.ed</p>
+                  <p style={{ fontFamily: T.sans, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: P.muted, marginBottom: "0.2rem" }}>E-mail</p>
+                  <p style={{ fontFamily: T.sans, fontSize: "0.88rem", color: P.earth }}>craftlab.ed@gmail.com</p>
                 </div>
               </a>
 

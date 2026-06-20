@@ -115,9 +115,14 @@ export function CartDrawer() {
             >
               Finalizar Encomenda
             </Link>
-            <p style={{ fontFamily: T.sans, fontSize: "0.62rem", color: P.muted, textAlign: "center", marginTop: "0.75rem", fontWeight: 300 }}>
-              Envio calculado na finalização
-            </p>
+            <div style={{ textAlign: "center", marginTop: "0.75rem" }}>
+              <p style={{ fontFamily: T.sans, fontSize: "0.62rem", color: P.muted, fontWeight: 300, marginBottom: "0.3rem" }}>
+                Envio calculado na finalização.
+              </p>
+              <p style={{ fontFamily: T.sans, fontSize: "0.62rem", color: P.primary, fontWeight: 500, lineHeight: 1.4 }}>
+                O pagamento só é feito quando a tua encomenda estiver pronta a ser enviada!
+              </p>
+            </div>
           </div>
         )}
       </aside>

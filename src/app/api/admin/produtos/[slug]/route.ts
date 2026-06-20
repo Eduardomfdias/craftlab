@@ -13,7 +13,11 @@ export async function PUT(req: NextRequest, { params }: { params: { slug: string
   const existing = await getProdutoStorage(params.slug);
   if (!existing) return NextResponse.json({ error: "Não encontrado" }, { status: 404 });
   const body = await req.json();
-  await writeProduto(params.slug, body, existing.sha as string | undefined);
+  try {
+    await writeProduto(params.slug, body, existing.sha as string | undefined);
+  } catch (e) {
+    return NextResponse.json({ error: (e as Error).message ?? "Erro ao guardar" }, { status: 500 });
+  }
   return NextResponse.json({ slug: params.slug, ...body });
 }
 

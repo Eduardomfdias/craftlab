@@ -27,18 +27,18 @@ const featured = [
   {
     id: 1,
     name: "Anilha Escutista Clássica",
-    desc: "Em corda de algodão trançada à mão",
+    desc: "Em corda de poliéster trançada à mão",
     price: "4,50 €",
     tag: "Best seller",
-    img: "https://images.unsplash.com/photo-1599640842225-85d111c60e6b?q=80&w=800&auto=format&fit=crop",
+    img: "/produtos/scout_anilha.png",
   },
   {
     id: 2,
     name: "Porta-chaves Nó Náutico",
-    desc: "Corda natural com mosquetão incluído",
+    desc: "Corda resistente com mosquetão",
     price: "6,00 €",
     tag: "Novo",
-    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop",
+    img: "/produtos/scout_keychain.png",
   },
   {
     id: 3,
@@ -46,7 +46,7 @@ const featured = [
     desc: "Combinação de cores à escolha",
     price: "7,00 €",
     tag: null,
-    img: "https://images.unsplash.com/photo-1620735692151-26a7e0748429?q=80&w=800&auto=format&fit=crop",
+    img: "/produtos/scout_hero.png",
   },
   {
     id: 4,
@@ -54,25 +54,25 @@ const featured = [
     desc: "Anilha + Porta-chaves + Pulseira",
     price: "15,00 €",
     tag: "Oferta",
-    img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=800&auto=format&fit=crop",
+    img: "/produtos/scout_process.png",
   },
 ];
 
 const categories = [
   {
     label: "Anilhas Escutistas",
-    sub: "Em corda trançada à mão",
-    img: "https://images.unsplash.com/photo-1599640842225-85d111c60e6b?q=80&w=700&auto=format&fit=crop",
+    sub: "Nós de poliéster perfeitos",
+    img: "/produtos/scout_anilha.png",
   },
   {
     label: "Porta-chaves",
     sub: "Nós náuticos e decorativos",
-    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=700&auto=format&fit=crop",
+    img: "/produtos/scout_keychain.png",
   },
   {
     label: "Combos & Packs",
     sub: "Conjuntos com desconto especial",
-    img: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?q=80&w=700&auto=format&fit=crop",
+    img: "/produtos/scout_hero.png",
   },
 ];
 
@@ -90,7 +90,7 @@ export default function Home() {
       {/* ═══ HERO ═══════════════════════════════════════ */}
       <section style={{ height: "100svh", minHeight: 640, position: "relative", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
         <img
-          src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=90&w=1920&auto=format&fit=crop"
+          src="/produtos/scout_hero.png"
           alt="Feito à mão. Feito para ti"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", filter: "brightness(0.28) saturate(0.6)" }}
         />
@@ -106,7 +106,7 @@ export default function Home() {
           </h1>
 
           <p className="hero-sub" style={{ fontFamily: T.sans, fontWeight: 300, fontSize: "1.05rem", color: `${P.warmWhite}b8`, letterSpacing: "0.05em", maxWidth: 500, margin: "0 auto 2.75rem", lineHeight: 1.75 }}>
-            Anilhas escutistas, porta-chaves e acessórios em corda,<br />feitos à mão com amor e dedicação.
+            Anilhas escutistas, porta-chaves e acessórios em corda de qualidade superior, feitos à mão com rigor e dedicação.
           </p>
 
           <div className="hero-cta" style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
@@ -182,7 +182,7 @@ export default function Home() {
 
       {/* ═══ PERSONALIZAÇÃO BANNER ══════════════════════ */}
       <section style={{ background: P.primary, padding: "4rem 1.5rem" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: "2rem", flexWrap: "wrap" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "2rem" }}>
           <div>
             <p style={{ fontFamily: T.sans, fontSize: "0.58rem", letterSpacing: "0.3em", textTransform: "uppercase", color: `${P.warmWhite}66`, marginBottom: "0.75rem" }}>Exclusivo</p>
             <h2 style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: "clamp(1.8rem,3.5vw,2.8rem)", fontWeight: 400, color: P.warmWhite, lineHeight: 1.15 }}>
@@ -228,16 +228,16 @@ export default function Home() {
 
       {/* ═══ BRAND STORY ════════════════════════════════ */}
       <section style={{ background: P.bg, padding: "7rem 0" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "4rem", alignItems: "center" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "4rem", alignItems: "center" }}>
           {/* Image collage */}
           <div style={{ position: "relative", height: 520 }}>
             <img
-              src="https://images.unsplash.com/photo-1620735692151-26a7e0748429?q=80&w=800&auto=format&fit=crop"
+              src="/produtos/scout_process.png"
               alt="Processo artesanal"
               style={{ position: "absolute", top: 0, left: 0, width: "68%", height: "68%", objectFit: "cover", filter: "saturate(0.7)" }}
             />
             <img
-              src="https://images.unsplash.com/photo-1599640842225-85d111c60e6b?q=80&w=600&auto=format&fit=crop"
+              src="/produtos/scout_anilha.png"
               alt="Anilha escutista"
               style={{ position: "absolute", bottom: 0, right: 0, width: "54%", height: "54%", objectFit: "cover", border: `4px solid ${P.bg}`, filter: "saturate(0.7)" }}
             />
@@ -253,14 +253,14 @@ export default function Home() {
               Feito à mão,<br />com propósito.
             </h2>
             <p style={{ fontFamily: T.sans, fontWeight: 300, color: P.muted, lineHeight: 1.85, fontSize: "0.95rem", marginBottom: "1rem" }}>
-              O CraftLab.ed nasceu da paixão pelo escutismo e pelo artesanato. Cada anilha, cada porta-chaves é criado com cuidado, pensando em quem o vai usar.
+              O CraftLab.ed nasceu da paixão pelo escutismo e pelo artesanato. Cada anilha, cada porta-chaves é criado com rigor, pensando em quem o vai usar no campo.
             </p>
             <p style={{ fontFamily: T.sans, fontWeight: 300, color: P.muted, lineHeight: 1.85, fontSize: "0.95rem", marginBottom: "2.5rem" }}>
-              Usamos corda de algodão natural e técnicas de nós tradicionais. Podemos personalizar cores, tamanhos e até incluir símbolos do teu grupo.
+              Usamos corda 100% poliéster de qualidade superior para que o nó fique perfeito e a peça dure uma vida inteira. Podemos personalizar cores, tamanhos e até incluir símbolos do teu grupo.
             </p>
 
             {/* Stats */}
-            <div style={{ display: "flex", gap: "3rem", marginBottom: "2.5rem" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "3rem", marginBottom: "2.5rem" }}>
               {[["500+", "Anilhas vendidas"], ["100%", "Feito à mão"], ["∞", "Cores disponíveis"]].map(([n, l]) => (
                 <div key={l}>
                   <p style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: "2.5rem", color: P.primary, lineHeight: 1 }}>{n}</p>

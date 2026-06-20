@@ -1,12 +1,14 @@
 {
   "nome": "Anilha Escutista Clássica",
-  "descricao": "Em corda de algodão trançada à mão",
-  "descricaoLonga": "A anilha escutista clássica é feita com corda de algodão 100% natural, trançada à mão com técnica tradicional. Disponível em várias cores.",
-  "preco": 4.50,
+  "descricao": "Em corda de poliéster trançada à mão",
+  "descricaoLonga": "A anilha escutista clássica é feita com corda 100% poliéster de alta qualidade, garantindo um nó firme e um acabamento perfeito. Feita à mão com técnica tradicional. Disponível em várias cores.",
+  "preco": 4.5,
   "categoria": "anilhas",
   "tag": "Best seller",
   "stock": 8,
   "destaque": true,
   "disponivel": true,
-  "fotos": ["https://images.unsplash.com/photo-1599640842225-85d111c60e6b?q=80&w=800&auto=format&fit=crop"]
+  "fotos": [
+    "/produtos/scout_anilha.png"
+  ]
 }

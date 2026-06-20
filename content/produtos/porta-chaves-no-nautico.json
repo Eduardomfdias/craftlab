@@ -1,12 +1,12 @@
 {
   "nome": "Porta-chaves Nó Náutico",
-  "descricao": "Corda natural com mosquetão incluído",
-  "descricaoLonga": "Porta-chaves feito com técnica de nó náutico em corda natural. Inclui mosquetão de metal resistente.",
+  "descricao": "Corda de alta qualidade com mosquetão",
+  "descricaoLonga": "Porta-chaves feito com técnica de nó náutico em corda de poliéster de alta resistência. Acabamento perfeito para durar o dia a dia. Inclui mosquetão de metal.",
   "preco": 6.00,
   "categoria": "porta-chaves",
   "tag": "Novo",
   "stock": 3,
   "destaque": true,
   "disponivel": true,
-  "fotos": ["https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=800&auto=format&fit=crop"]
+  "fotos": ["/produtos/scout_keychain.png"]
 }

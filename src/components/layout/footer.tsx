@@ -47,9 +47,9 @@ export function Footer() {
                 <MapPin size={13} style={{ color: P.rope }} />
                 <span style={{ fontFamily: T.sans, fontSize: "0.75rem", color: `${P.sand}50` }}>Portugal, com envio nacional</span>
               </div>
-              <a href="mailto:hello@craftlab.ed" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
+              <a href="mailto:craftlab.ed@gmail.com" style={{ display: "flex", alignItems: "center", gap: "0.5rem", textDecoration: "none" }}>
                 <Mail size={13} style={{ color: P.rope }} />
-                <span style={{ fontFamily: T.sans, fontSize: "0.75rem", color: `${P.sand}50` }}>hello@craftlab.ed</span>
+                <span style={{ fontFamily: T.sans, fontSize: "0.75rem", color: `${P.sand}50` }}>craftlab.ed@gmail.com</span>
               </a>
             </div>
           </div>
@@ -58,8 +58,8 @@ export function Footer() {
           <div>
             <p style={{ fontFamily: T.sans, fontSize: "0.55rem", letterSpacing: "0.25em", textTransform: "uppercase", color: P.rope, marginBottom: "1.25rem" }}>Loja</p>
             <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {["Todos os Produtos", "Cestos", "Decoração", "Porta-vasos", "Bolsas"].map(l => (
-                <li key={l}><Link href="/loja" style={{ fontFamily: T.sans, fontSize: "0.82rem", fontWeight: 300, color: `${P.sand}50`, textDecoration: "none" }}>{l}</Link></li>
+              {[{l: "Todos os Produtos", h: "/loja"}, {l: "Anilhas", h: "/loja?cat=anilhas"}, {l: "Porta-chaves", h: "/loja?cat=porta-chaves"}].map(({l, h}) => (
+                <li key={l}><Link href={h} style={{ fontFamily: T.sans, fontSize: "0.82rem", fontWeight: 300, color: `${P.sand}50`, textDecoration: "none" }}>{l}</Link></li>
               ))}
             </ul>
           </div>
@@ -68,7 +68,7 @@ export function Footer() {
           <div>
             <p style={{ fontFamily: T.sans, fontSize: "0.55rem", letterSpacing: "0.25em", textTransform: "uppercase", color: P.rope, marginBottom: "1.25rem" }}>Informação</p>
             <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {[{l:"Sobre Nós",h:"/sobre"},{l:"O Processo",h:"/sobre"},{l:"Contacto",h:"/contacto"},{l:"Envios",h:"/envios"},{l:"Termos",h:"/termos"}].map(({l,h}) => (
+              {[{l:"A Nossa História",h:"/sobre"},{l:"Contacto",h:"/contacto"}].map(({l,h}) => (
                 <li key={l}><Link href={h} style={{ fontFamily: T.sans, fontSize: "0.82rem", fontWeight: 300, color: `${P.sand}50`, textDecoration: "none" }}>{l}</Link></li>
               ))}
             </ul>
@@ -84,9 +84,6 @@ export function Footer() {
                   Instagram
                 </a>
               </li>
-              {[{l:"Pinterest",h:"#"},{l:"TikTok",h:"#"}].map(({l,h}) => (
-                <li key={l}><a href={h} style={{ fontFamily: T.sans, fontSize: "0.82rem", fontWeight: 300, color: `${P.sand}50`, textDecoration: "none" }}>{l}</a></li>
-              ))}
             </ul>
           </div>
         </div>

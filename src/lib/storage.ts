@@ -73,7 +73,7 @@ export async function writeProduto(slug: string, data: Record<string, unknown>, 
   }
 
   const content = Buffer.from(JSON.stringify(clean, null, 2)).toString("base64");
-  await fetch(ghUrl(`content/produtos/${slug}.json`), {
+  const res = await fetch(ghUrl(`content/produtos/${slug}.json`), {
     method: "PUT",
     headers: ghHeaders(),
     body: JSON.stringify({
@@ -83,6 +83,10 @@ export async function writeProduto(slug: string, data: Record<string, unknown>, 
       ...(sha ? { sha } : {}),
     }),
   });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message ?? `GitHub API error ${res.status}`);
+  }
 }
 
 export async function deleteProduto(slug: string, sha: string): Promise<void> {

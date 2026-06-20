@@ -68,7 +68,7 @@ export function Navbar() {
                 height: 96,
                 width: 96,
                 objectFit: "contain",
-                filter: scrolled ? "invert(1) brightness(0.3)" : "none",
+                filter: scrolled ? "brightness(0)" : "none",
                 transition: "filter 0.35s ease",
               }}
             />
