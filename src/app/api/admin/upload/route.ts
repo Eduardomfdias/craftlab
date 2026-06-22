@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { v2 as cloudinary } from "cloudinary";
 
-const REPO   = process.env.GITHUB_REPO   ?? "";
-const BRANCH = process.env.GITHUB_BRANCH ?? "main";
-const TOKEN  = process.env.GITHUB_TOKEN  ?? "";
-const isVercel = process.env.VERCEL === "1";
-
-import fs from "fs";
-import path from "path";
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: NextRequest) {
   const formData = await req.formData();
@@ -19,47 +18,22 @@ export async function POST(req: NextRequest) {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
-  // Gerar nome seguro para o ficheiro
-  const ext = file.name.split(".").pop()?.toLowerCase() ?? "jpg";
-  const slug = file.name
-    .toLowerCase()
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/[^a-z0-9.]+/g, "-")
-    .replace(/^-|-$/g, "");
-  const filename = `produto-${Date.now()}-${slug}`;
-  const filePath = `public/produtos/${filename}`;
+  try {
+    // Fazer upload para o Cloudinary usando upload_stream
+    const result = await new Promise((resolve, reject) => {
+      const uploadStream = cloudinary.uploader.upload_stream(
+        { folder: "craftlab_produtos" },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      uploadStream.end(buffer);
+    });
 
-  if (!isVercel) {
-    // Guardar localmente
-    const localPath = path.join(process.cwd(), filePath);
-    fs.writeFileSync(localPath, buffer);
-    return NextResponse.json({ url: `/produtos/${filename}` });
+    return NextResponse.json({ url: (result as any).secure_url });
+  } catch (error) {
+    console.error("Erro no Cloudinary:", error);
+    return NextResponse.json({ error: "Erro ao fazer upload da imagem" }, { status: 500 });
   }
-
-  // Upload para GitHub
-  const content = buffer.toString("base64");
-  const res = await fetch(
-    `https://api.github.com/repos/${REPO}/contents/${filePath}`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        Accept: "application/vnd.github+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: `upload: ${filename}`,
-        content,
-        branch: BRANCH,
-      }),
-    }
-  );
-
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    return NextResponse.json({ error: err.message ?? "Erro ao fazer upload" }, { status: 500 });
-  }
-
-  return NextResponse.json({ url: `/produtos/${filename}` });
 }
