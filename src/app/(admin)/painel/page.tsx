@@ -49,19 +49,31 @@ export default function PainelPage() {
   const [form, setForm] = useState<Omit<Produto, "slug">>(EMPTY);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState("");
+  const [msgOk, setMsgOk] = useState(true);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
 
   const carregar = () => {
     setLoading(true);
     fetch(`/api/admin/produtos?t=${Date.now()}`)
-      .then(r => r.json())
-      .then(d => { setProdutos(d); setLoading(false); });
+      .then(r => {
+        if (!r.ok) throw new Error("Sessão expirada. Recarrega a página.");
+        return r.json();
+      })
+      .then(d => {
+        if (!Array.isArray(d)) throw new Error("Resposta inválida do servidor.");
+        setProdutos(d);
+        setLoading(false);
+      })
+      .catch(e => {
+        flash(e.message ?? "Erro ao carregar produtos", false);
+        setLoading(false);
+      });
   };
 
   useEffect(() => { carregar(); }, []);
 
-  const flash = (text: string) => { setMsg(text); setTimeout(() => setMsg(""), 3000); };
+  const flash = (text: string, ok = true) => { setMsg(text); setMsgOk(ok); setTimeout(() => setMsg(""), 4000); };
 
   const abrirEditar = (p: Produto) => {
     setEditando(p);
@@ -95,7 +107,7 @@ export default function PainelPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados),
       });
-      if (!res.ok) { const d = await res.json().catch(() => ({})); flash(d.error ?? "Erro ao guardar"); setSaving(false); return; }
+      if (!res.ok) { const d = await res.json().catch(() => ({})); flash(d.error ?? "Erro ao guardar", false); setSaving(false); return; }
       flash("Guardado!");
     } else {
       const res = await fetch("/api/admin/produtos", {
@@ -103,7 +115,7 @@ export default function PainelPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dados),
       });
-      if (!res.ok) { const d = await res.json().catch(() => ({})); flash(d.error ?? "Erro"); setSaving(false); return; }
+      if (!res.ok) { const d = await res.json().catch(() => ({})); flash(d.error ?? "Erro ao criar produto", false); setSaving(false); return; }
       flash("Produto criado!");
     }
     setSaving(false);
@@ -136,7 +148,7 @@ export default function PainelPage() {
       f("fotos", [data.url]);
       flash("Foto carregada!");
     } else {
-      flash(data.error ?? "Erro ao carregar foto");
+      flash(data.error ?? "Erro ao carregar foto", false);
     }
     setUploading(false);
   };
@@ -162,7 +174,7 @@ export default function PainelPage() {
 
       {/* flash msg */}
       {msg && (
-        <div style={{ background: P.green, color: "#fff", padding: "0.75rem 1.25rem", fontFamily: T.sans, fontSize: "0.75rem", letterSpacing: "0.1em", textAlign: "center" }}>
+        <div style={{ background: msgOk ? P.green : P.red, color: "#fff", padding: "0.75rem 1.25rem", fontFamily: T.sans, fontSize: "0.75rem", letterSpacing: "0.1em", textAlign: "center" }}>
           {msg}
         </div>
       )}
