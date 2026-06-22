@@ -43,6 +43,10 @@ export default function ContactoPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const emailLine = form.email ? `\nEmail: ${form.email}` : "";
+    const texto = `Olá! Sou o/a ${form.nome}.${emailLine}\nAssunto: ${form.assunto}\nMensagem:\n${form.mensagem}`;
+    const url = `https://wa.me/351911799876?text=${encodeURIComponent(texto)}`;
+    window.open(url, '_blank');
     setSent(true);
   };
 
@@ -75,7 +79,7 @@ export default function ContactoPage() {
       {/* ── HERO ─────────────────────────────────────── */}
       <section style={{ paddingTop: 96, background: P.dark, minHeight: 360, display: "flex", alignItems: "center", position: "relative" }}>
         <img
-          src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1920&auto=format&fit=crop"
+          src="/produtos/scout_contact.png"
           alt="Contacto"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.15) saturate(0.4)" }}
         />
@@ -188,8 +192,7 @@ export default function ContactoPage() {
                     <label style={labelStyle}>Email</label>
                     <input
                       type="email"
-                      required
-                      placeholder="o.teu@email.com"
+                      placeholder="o.teu@email.com (Opcional)"
                       value={form.email}
                       onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                       style={inputStyle}
@@ -228,7 +231,7 @@ export default function ContactoPage() {
                   type="submit"
                   style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem", background: P.primary, color: "#fff", padding: "1rem 2rem", fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}
                 >
-                  Enviar Mensagem <Send size={13} />
+                  Enviar por WhatsApp <ArrowRight size={14} />
                 </button>
               </form>
             )}

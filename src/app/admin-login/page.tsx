@@ -106,9 +106,7 @@ function LoginForm() {
           </button>
         </form>
 
-        <p style={{ fontFamily: T.sans, fontSize: "0.65rem", color: `${P.sand}30`, textAlign: "center", marginTop: "2rem", lineHeight: 1.6 }}>
-          Se perdeste a password, altera <code style={{ color: `${P.sand}45` }}>ADMIN_PASSWORD</code> no ficheiro <code style={{ color: `${P.sand}45` }}>.env.local</code>
-        </p>
+
       </div>
     </div>
   );

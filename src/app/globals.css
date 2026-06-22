@@ -88,3 +88,10 @@ h1, h2, h3 {
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--c-linen); }
 ::-webkit-scrollbar-thumb { background: var(--c-primary); border-radius: 99px; }
+
+/* ─── Navigation ─────────────────────────────── */
+.menu-mobile { display: none; }
+@media (max-width: 768px) {
+  .nav-desktop { display: none !important; }
+  .menu-mobile { display: block !important; }
+}

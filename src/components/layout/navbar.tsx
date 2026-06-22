@@ -50,14 +50,19 @@ export function Navbar() {
       }}>
         <div style={{ maxWidth: 1280, width: "100%", margin: "0 auto", padding: "0 1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative" }}>
 
-          {/* Left nav */}
-          <nav style={{ display: "flex", gap: "2.5rem" }} className="nav-desktop">
-            {links.map((l) => (
-              <Link key={l.href} href={l.href} style={{ fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", color: scrolled ? P.earth : "rgba(240,247,253,0.85)", textDecoration: "none", transition: "color 0.2s" }}>
-                {l.label}
-              </Link>
-            ))}
-          </nav>
+          {/* Left Side: Nav and Menu Button */}
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <nav style={{ display: "flex", gap: "2.5rem" }} className="nav-desktop">
+              {links.map((l) => (
+                <Link key={l.href} href={l.href} style={{ fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase", color: scrolled ? P.earth : "rgba(240,247,253,0.85)", textDecoration: "none", transition: "color 0.2s" }}>
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+            <button className="menu-mobile" onClick={() => setOpen(v => !v)} style={{ padding: 4, background: "none", border: "none", cursor: "pointer", color: scrolled ? P.earth : P.warmWhite, transition: "color 0.3s" }} aria-label="Menu">
+              {open ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
 
           {/* Logo — imagem com blend mode */}
           <Link href="/" style={{ position: "absolute", left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", textDecoration: "none" }}>
@@ -82,9 +87,6 @@ export function Navbar() {
                 <span style={{ position: "absolute", top: -8, right: -8, width: 16, height: 16, background: P.primary, color: "#fff", borderRadius: "50%", fontSize: "0.55rem", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: T.sans, fontWeight: 600 }}>{count}</span>
               )}
             </button>
-            <button onClick={() => setOpen(v => !v)} style={{ padding: 4, background: "none", border: "none", cursor: "pointer", color: scrolled ? P.earth : P.warmWhite, transition: "color 0.3s" }} aria-label="Menu">
-              {open ? <X size={20} /> : <Menu size={20} />}
-            </button>
           </div>
         </div>
       </header>
@@ -97,7 +99,6 @@ export function Navbar() {
         transform: open ? "translateX(0)" : "translateX(-100%)",
         transition: "transform 0.4s cubic-bezier(0.16,1,0.3,1)",
       }}>
-        <img src="/logo.png" alt="CraftLab.ed" style={{ height: 80, width: 80, objectFit: "contain", marginBottom: "1rem" }} />
         {links.map((l) => (
           <Link key={l.href} href={l.href} onClick={() => setOpen(false)}
             style={{ fontFamily: T.serif, fontSize: "3rem", fontStyle: "italic", color: P.warmWhite, textDecoration: "none" }}>

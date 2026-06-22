@@ -22,13 +22,13 @@ const T = {
   serif: "'Cormorant Garamond', Georgia, serif",
   sans:  "'Jost', system-ui, sans-serif",
 };
-
 const categorias = [
   { id: "todos",        label: "Todos" },
-  { id: "anilhas",     label: "Anilhas" },
+  { id: "anilhas",     label: "Anilhas Escutistas" },
   { id: "porta-chaves",label: "Porta-chaves" },
   { id: "combos",      label: "Combos & Packs" },
 ];
+
 
 export default function LojaPage() {
   const [produtos, setProdutos] = useState<Produto[]>([]);

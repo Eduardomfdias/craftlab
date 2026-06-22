@@ -40,7 +40,8 @@ export function Footer() {
               Cada Nó tem uma história.
             </p>
             <p style={{ fontFamily: T.sans, fontWeight: 300, fontSize: "0.88rem", color: `${P.sand}65`, maxWidth: 260, lineHeight: 1.8, marginBottom: "1.5rem" }}>
-              Peças artesanais em macramé e corda natural, feitas com intenção e cuidado.
+              Feito à mão, com propósito.<br />
+              Feito à mão, feito para ti!
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -58,7 +59,7 @@ export function Footer() {
           <div>
             <p style={{ fontFamily: T.sans, fontSize: "0.55rem", letterSpacing: "0.25em", textTransform: "uppercase", color: P.rope, marginBottom: "1.25rem" }}>Loja</p>
             <ul style={{ listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {[{l: "Todos os Produtos", h: "/loja"}, {l: "Anilhas", h: "/loja?cat=anilhas"}, {l: "Porta-chaves", h: "/loja?cat=porta-chaves"}].map(({l, h}) => (
+              {[{l: "Todos os Produtos", h: "/loja"}, {l: "Anilhas Escutistas", h: "/loja?cat=anilhas"}, {l: "Porta-chaves", h: "/loja?cat=porta-chaves"}].map(({l, h}) => (
                 <li key={l}><Link href={h} style={{ fontFamily: T.sans, fontSize: "0.82rem", fontWeight: 300, color: `${P.sand}50`, textDecoration: "none" }}>{l}</Link></li>
               ))}
             </ul>
@@ -84,8 +85,15 @@ export function Footer() {
                   Instagram
                 </a>
               </li>
+              <li>
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: T.sans, fontSize: "0.82rem", fontWeight: 300, color: `${P.sand}50`, textDecoration: "none" }}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                  Facebook
+                </a>
+              </li>
             </ul>
           </div>
+
         </div>
 
         <div style={{ paddingTop: "2rem", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "0.75rem" }}>

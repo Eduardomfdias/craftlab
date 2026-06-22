@@ -19,32 +19,30 @@ const P = {
 const T = {
   serif: "'Cormorant Garamond', Georgia, serif",
   sans:  "'Jost', system-ui, sans-serif",
-};
-
-const steps = [
+};const steps = [
   {
     n: "01",
     title: "O Material Certo",
     body: "Usamos corda 100% poliéster de qualidade. Com materiais fracos, os nós nunca ficam perfeitos e as peças acabam por ficar mal acabadas. A resistência é chave.",
-    img: "/produtos/scout_hero.png",
+    img: "/produtos/scout_process.png",
   },
   {
     n: "02",
     title: "O Nó",
     body: "Cada nó é dado à mão com extrema dedicação e rigor técnico. Esta precisão garante que a peça mantém a sua forma perfeita e nunca se desfaz com o tempo.",
-    img: "/produtos/scout_process.png",
+    img: "/produtos/scout_hero.png",
   },
   {
     n: "03",
     title: "Personalização",
     body: "Cores, tamanhos ou símbolos específicos: tudo é possível. Trabalhamos contigo para criar algo único que conta a tua história.",
-    img: "/produtos/scout_anilha.png",
+    img: "/produtos/scout_keychain.png",
   },
   {
     n: "04",
     title: "Embalagem e Envio",
-    body: "Cada peça é embalada com cuidado, acompanhada de uma nota escrita à mão. O envio é feito para todo o país através do correio nacional.",
-    img: "/produtos/scout_keychain.png",
+    body: "Cada peça é devidamente acomodada e embalada com cuidado, acompanhada de uma nota escrita à mão. O envio é feito por correio para todo o país, ou entregue em mão mediante acordo.",
+    img: "/produtos/scout_embalagem.png",
   },
 ];
 

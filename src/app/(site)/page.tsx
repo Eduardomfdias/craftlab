@@ -23,6 +23,7 @@ const T = {
   sans: "'Jost', system-ui, sans-serif",
 };
 
+
 const featured = [
   {
     id: "anilha-escutista-classica",
@@ -60,7 +61,7 @@ const featured = [
 
 const categories = [
   {
-    label: "Anilhas",
+    label: "Anilhas Escutistas",
     sub: "Nós de poliéster perfeitos",
     img: "/produtos/scout_anilha.png",
   },
@@ -85,6 +86,7 @@ const perks = [
 
 export default function Home() {
   return (
+
     <div style={{ width: "100%", overflowX: "hidden" }}>
 
       {/* ═══ HERO ═══════════════════════════════════════ */}
@@ -175,10 +177,10 @@ export default function Home() {
           <div>
             <p style={{ fontFamily: T.sans, fontSize: "0.58rem", letterSpacing: "0.3em", textTransform: "uppercase", color: `${P.warmWhite}66`, marginBottom: "0.75rem" }}>Exclusivo</p>
             <h2 style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: "clamp(1.8rem,3.5vw,2.8rem)", fontWeight: 400, color: P.warmWhite, lineHeight: 1.15 }}>
-              Quer personalizar a sua anilha?
+              Queres personalizar um artigo?
             </h2>
             <p style={{ fontFamily: T.sans, fontWeight: 300, color: `${P.warmWhite}80`, fontSize: "0.88rem", marginTop: "0.75rem" }}>
-              Escolhe as cores, o estilo e até podes pedir o teu nome ou símbolo de grupo.
+              Podemos fazê-lo em várias cores e estilos.
             </p>
           </div>
           <Link
@@ -239,18 +241,18 @@ export default function Home() {
           <div>
             <div className="ornament-line" style={{ marginBottom: "2rem" }}>A Nossa História</div>
             <h2 style={{ fontFamily: T.serif, fontStyle: "italic", fontWeight: 400, fontSize: "clamp(2.5rem,4vw,3.5rem)", color: P.earth, lineHeight: 1.1, marginBottom: "1.5rem" }}>
-              Feito à mão,<br />com propósito.
+              Feito à mão,<br />para ti!
             </h2>
             <p style={{ fontFamily: T.sans, fontWeight: 300, fontSize: "0.95rem", color: P.muted, lineHeight: 1.8, marginBottom: "2rem" }}>
-              O CraftLab.ed nasceu da paixão pelo artesanato. Cada anilha, cada porta-chaves é criado com rigor, pensando na resistência e no dia a dia.
+              A paixão pelo artesanato nasceu de forma natural, ao criar os primeiros artigos em corda para uso próprio. O que começou como um passatempo para consumo pessoal, rapidamente despertou o interesse de amigos, até evoluir para a criação do CraftLab.ed.
             </p>
             <p style={{ fontFamily: T.sans, fontWeight: 300, color: P.muted, lineHeight: 1.85, fontSize: "0.95rem", marginBottom: "2.5rem" }}>
-              Usamos corda 100% poliéster de qualidade superior para que o nó fique perfeito e a peça dure uma vida inteira. Podemos personalizar cores, tamanhos e até incluir símbolos do teu grupo.
+              Cada peça é criada com rigor e dedicação. Usamos corda de qualidade superior para que o nó fique perfeito e resista ao dia a dia. Podemos personalizar cores e tamanhos.
             </p>
 
             {/* Stats */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: "3rem", marginBottom: "2.5rem" }}>
-              {[["500+", "Anilhas vendidas"], ["100%", "Feito à mão"], ["∞", "Cores disponíveis"]].map(([n, l]) => (
+              {[["200+", "Artigos vendidos"], ["100%", "Feito à mão"], ["∞", "Cores disponíveis"]].map(([n, l]) => (
                 <div key={l}>
                   <p style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: "2.5rem", color: P.primary, lineHeight: 1 }}>{n}</p>
                   <p style={{ fontFamily: T.sans, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: P.rope, marginTop: "0.3rem" }}>{l}</p>
@@ -268,31 +270,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ NEWSLETTER ═════════════════════════════════ */}
+      {/* ═══ REDES SOCIAIS ═════════════════════════════════ */}
       <section style={{ background: P.dark, paddingTop: "5rem", paddingBottom: "5rem" }}>
         <div style={{ maxWidth: 560, margin: "0 auto", textAlign: "center", padding: "0 1.5rem" }}>
           <p style={{ fontFamily: T.sans, fontSize: "0.58rem", letterSpacing: "0.32em", textTransform: "uppercase", color: `${P.warmWhite}45`, marginBottom: "1.25rem" }}>
-            Newsletter
+            Redes Sociais
           </p>
           <h2 style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: "clamp(2rem,4vw,3rem)", fontWeight: 400, color: P.warmWhite, marginBottom: "0.75rem", lineHeight: 1.2 }}>
-            Novidades e lançamentos<br />em primeira mão
+            Segue-nos no Instagram<br />e Facebook
           </h2>
-          <p style={{ fontFamily: T.sans, fontWeight: 300, color: `${P.warmWhite}70`, fontSize: "0.9rem", marginBottom: "2.5rem" }}>
-            Subscreve e ganha 10% de desconto na primeira encomenda.
+          <p style={{ fontFamily: T.sans, fontWeight: 300, color: `${P.warmWhite}70`, fontSize: "0.9rem", marginBottom: "2.5rem", lineHeight: 1.6 }}>
+            Para ficares a par mais rapidamente de todas as novidades!
           </p>
-          <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 420, margin: "0 auto" }}>
-            <input
-              type="email"
-              placeholder="o teu e-mail"
-              style={{ padding: "1rem 1.25rem", background: `${P.warmWhite}10`, border: `1px solid ${P.warmWhite}22`, color: P.warmWhite, outline: "none", fontFamily: T.sans, fontSize: "0.85rem" }}
-            />
-            <button
-              type="submit"
-              style={{ padding: "1rem", background: P.primary, color: P.warmWhite, fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}
-            >
-              Subscrever
-            </button>
-          </form>
+          <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
+            <a href="https://www.instagram.com/craftlab.ed" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2rem", background: P.primary, color: P.warmWhite, fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", transition: "background 0.3s" }} onMouseEnter={e => (e.currentTarget.style.background = P.primaryH)} onMouseLeave={e => (e.currentTarget.style.background = P.primary)}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              Instagram
+            </a>
+            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2rem", background: "transparent", border: `1px solid ${P.primary}`, color: P.warmWhite, fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", transition: "background 0.3s" }} onMouseEnter={e => (e.currentTarget.style.background = "rgba(46,107,158,0.15)")} onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              Facebook
+            </a>
+          </div>
         </div>
       </section>
 
