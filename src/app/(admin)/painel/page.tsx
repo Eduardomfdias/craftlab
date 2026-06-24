@@ -69,6 +69,11 @@ export default function PainelPage() {
     const produto = produtos.find(p => p.slug === slug);
     if (!produto) return;
     const novoStock = parseInt(stockVal) || 0;
+    if (stockVal.trim() === "" || isNaN(parseInt(stockVal)) || parseInt(stockVal) < 0) {
+      flash("Stock inválido.", false);
+      setEditingStock(null);
+      return;
+    }
     try {
       const r = await fetch(`/api/admin/produtos/${slug}`, {
         method: "PUT",
@@ -87,11 +92,12 @@ export default function PainelPage() {
 
   const apagar = async (slug: string) => {
     try {
-      await fetch(`/api/admin/produtos/${slug}`, { method: "DELETE" });
+      const r = await fetch(`/api/admin/produtos/${slug}`, { method: "DELETE" });
+      if (!r.ok) throw new Error("Erro ao apagar produto.");
       setProdutos(prev => prev.filter(p => p.slug !== slug));
       flash("Produto apagado.");
-    } catch {
-      flash("Erro ao apagar produto.", false);
+    } catch (e) {
+      flash((e as Error).message, false);
     } finally {
       setConfirmDelete(null);
     }
