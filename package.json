@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@keystatic/core": "^0.5.50",
-    "@keystatic/next": "^5.0.4",
     "@supabase/supabase-js": "^2.108.2",
     "cloudinary": "^2.10.0",
     "clsx": "^2.1.1",

@@ -23,8 +23,6 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const isAdmin =
-    pathname.startsWith("/keystatic") ||
-    pathname.startsWith("/api/keystatic") ||
     pathname.startsWith("/painel") ||
     pathname.startsWith("/api/admin");
 
@@ -46,5 +44,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/keystatic/:path*", "/api/keystatic/:path*", "/painel", "/painel/:path*", "/api/admin/:path*"],
+  matcher: ["/painel", "/painel/:path*", "/api/admin/:path*"],
 };
