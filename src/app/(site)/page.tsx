@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, MoveRight } from "lucide-react";
 import { useEffect, useState } from "react";
-import { getProdutosDestaque, type Produto } from "@/lib/produtos";
+import type { Produto } from "@/lib/produtos";
 
 const P = {
   primary: "#2E6B9E",
@@ -50,7 +50,7 @@ export default function Home() {
   const [catImgs, setCatImgs] = useState<Record<string, string>>(DEFAULT_CAT_IMGS);
 
   useEffect(() => {
-    getProdutosDestaque().then(setFeatured);
+    fetch("/api/produtos?destaque=true").then(r => r.json()).then(setFeatured).catch(() => {});
     fetch("/api/admin/config")
       .then(r => r.json())
       .then((data: Record<string, string>) => {
