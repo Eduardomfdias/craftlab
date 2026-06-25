@@ -53,6 +53,10 @@ export async function writeProduto(
   slug: string,
   data: Record<string, unknown>
 ): Promise<void> {
+  const url = process.env.SUPABASE_URL;
+  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) throw new Error("Supabase não configurado");
+
   const row = {
     slug,
     nome: data.nome,
@@ -66,10 +70,21 @@ export async function writeProduto(
     disponivel: data.disponivel,
     fotos: data.fotos,
   };
-  const { error } = await supabase
-    .from("produtos")
-    .upsert(row, { onConflict: "slug" });
-  if (error) throw new Error(error.message);
+
+  const res = await fetch(`${url}/rest/v1/produtos?on_conflict=slug`, {
+    method: "POST",
+    headers: {
+      apikey: key,
+      Authorization: `Bearer ${key}`,
+      "Content-Type": "application/json",
+      Prefer: "resolution=merge-duplicates",
+    },
+    body: JSON.stringify(row),
+  });
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(err);
+  }
 }
 
 export async function deleteProduto(slug: string): Promise<void> {
