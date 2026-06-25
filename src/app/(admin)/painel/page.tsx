@@ -159,6 +159,22 @@ export default function PainelPage() {
     }
   };
 
+  const saveCatImg = async (chave: string, url: string) => {
+    const newImgs = { ...catImgs, [chave]: url };
+    setCatImgs(newImgs);
+    try {
+      const r = await fetch("/api/admin/config", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newImgs),
+      });
+      if (!r.ok) throw new Error("Erro ao guardar");
+      flash("Imagem guardada!");
+    } catch (e) {
+      flash((e as Error).message, false);
+    }
+  };
+
   const uploadCatImg = async (chave: string, file: File) => {
     const fd = new FormData();
     fd.append("file", file);
@@ -166,7 +182,7 @@ export default function PainelPage() {
       const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
       if (!r.ok) throw new Error("Erro no upload");
       const { url } = await r.json();
-      setCatImgs(prev => ({ ...prev, [chave]: url }));
+      await saveCatImg(chave, url);
     } catch (e) {
       flash((e as Error).message, false);
     }
@@ -333,7 +349,7 @@ export default function PainelPage() {
                             {fotosUnicas.map(foto => (
                               <div
                                 key={foto}
-                                onClick={() => { setCatImgs(prev => ({ ...prev, [chave]: foto })); setPickerFor(null); }}
+                                onClick={() => { saveCatImg(chave, foto); setPickerFor(null); }}
                                 style={{ aspectRatio: "1", overflow: "hidden", cursor: "pointer", border: catImgs[chave] === foto ? `2px solid ${P.primary}` : `2px solid transparent`, boxSizing: "border-box" as const }}
                               >
                                 <img src={foto} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -349,13 +365,9 @@ export default function PainelPage() {
             })}
           </div>
 
-          <button
-            onClick={salvarCatImgs}
-            disabled={savingCat}
-            style={{ background: P.primary, color: "#fff", border: "none", padding: "0.7rem 1.5rem", fontFamily: T.sans, fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: savingCat ? "default" : "pointer", opacity: savingCat ? 0.6 : 1 }}
-          >
-            {savingCat ? "A guardar..." : "Guardar Imagens"}
-          </button>
+          <p style={{ fontFamily: T.sans, fontSize: "0.65rem", color: P.muted, fontStyle: "italic" }}>
+            As imagens são guardadas automaticamente ao selecionar.
+          </p>
         </div>
       </div>
     </div>

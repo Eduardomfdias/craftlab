@@ -27,9 +27,9 @@ const T = {
 
 
 const categories = [
-  { chave: "categoria_img_anilhas",      label: "Anilhas Escutistas", sub: "Nós de poliéster perfeitos" },
-  { chave: "categoria_img_porta-chaves", label: "Porta-chaves",       sub: "Nós náuticos e decorativos" },
-  { chave: "categoria_img_combos",       label: "Combos & Packs",     sub: "Conjuntos com desconto especial" },
+  { chave: "categoria_img_anilhas",      label: "Anilhas Escutistas", sub: "Nós de poliéster perfeitos",      href: "/loja?categoria=anilhas" },
+  { chave: "categoria_img_porta-chaves", label: "Porta-chaves",       sub: "Nós náuticos e decorativos",      href: "/loja?categoria=porta-chaves" },
+  { chave: "categoria_img_combos",       label: "Combos & Packs",     sub: "Conjuntos com desconto especial", href: "/loja?categoria=combos" },
 ];
 
 const perks = [
@@ -187,7 +187,7 @@ export default function Home() {
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
             {categories.map((c) => (
-              <Link key={c.label} href="/loja" className="group" style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden", display: "block", textDecoration: "none" }}>
+              <Link key={c.label} href={c.href} className="group" style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden", display: "block", textDecoration: "none" }}>
                 <img src={catImgs[c.chave]} alt={c.label} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease", filter: "saturate(0.75)" }} className="group-hover:scale-105" />
                 <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, ${P.dark}e0 0%, ${P.dark}10 55%, transparent 100%)` }} />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.75rem" }}>

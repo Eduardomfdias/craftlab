@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowRight, ShoppingBag } from "lucide-react";
 import { useCart } from "@/context/CartContext";
@@ -32,11 +33,18 @@ const categorias = [
 
 export default function LojaPage() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [catAtiva, setCatAtiva] = useState("todos");
   const [loading, setLoading] = useState(true);
   const { addItem } = useCart();
+  const searchParams = useSearchParams();
+  const [catAtiva, setCatAtiva] = useState(searchParams.get("categoria") ?? "todos");
+  const didInit = useRef(false);
 
   useEffect(() => {
+    if (!didInit.current) {
+      didInit.current = true;
+      const cat = searchParams.get("categoria");
+      if (cat) setCatAtiva(cat);
+    }
     fetch("/api/produtos")
       .then(r => r.json())
       .then(data => { setProdutos(data); setLoading(false); });
