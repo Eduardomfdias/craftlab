@@ -35,7 +35,7 @@ const categories = [
 const perks = [
   { icon: "✦", text: "100% Feito à Mão" },
   { icon: "✦", text: "Personalização Disponível" },
-  { icon: "✦", text: "Envio Nacional Grátis acima de 25€" },
+  { icon: "✦", text: "Envio Nacional Grátis acima de 30€" },
   { icon: "✦", text: "Cores à Escolha" },
 ];
 
