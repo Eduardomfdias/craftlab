@@ -142,6 +142,36 @@ export default function PainelPage() {
 
   const stockColor = (s: number) => s === 0 ? P.red : s <= 3 ? "#e67e22" : P.green;
 
+  const toggleDestaque = async (slug: string) => {
+    const produto = produtos.find(p => p.slug === slug);
+    if (!produto) return;
+    const novoDestaque = !produto.destaque;
+    try {
+      const r = await fetch(`/api/admin/produtos/${slug}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...produto, destaque: novoDestaque }),
+      });
+      if (!r.ok) throw new Error("Erro ao guardar");
+      setProdutos(prev => prev.map(p => p.slug === slug ? { ...p, destaque: novoDestaque } : p));
+    } catch (e) {
+      flash((e as Error).message, false);
+    }
+  };
+
+  const uploadCatImg = async (chave: string, file: File) => {
+    const fd = new FormData();
+    fd.append("file", file);
+    try {
+      const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
+      if (!r.ok) throw new Error("Erro no upload");
+      const { url } = await r.json();
+      setCatImgs(prev => ({ ...prev, [chave]: url }));
+    } catch (e) {
+      flash((e as Error).message, false);
+    }
+  };
+
   return (
     <div style={{ minHeight: "100svh", background: P.bg, fontFamily: T.sans }}>
 
@@ -229,6 +259,13 @@ export default function PainelPage() {
                     {p.stock === 0 ? "Esgotado" : `${p.stock}`}
                   </button>
                 )}
+                <button
+                  onClick={() => toggleDestaque(p.slug)}
+                  title={p.destaque ? "Remover destaque" : "Colocar em destaque"}
+                  style={{ flexShrink: 0, background: p.destaque ? "#f5a623" + "22" : "none", border: `1px solid ${p.destaque ? "#f5a623" : P.sand + "60"}`, color: p.destaque ? "#f5a623" : P.muted, padding: "0.4rem 0.55rem", fontFamily: T.sans, fontSize: "0.75rem", cursor: "pointer", lineHeight: 1 }}
+                >
+                  ★
+                </button>
                 <button onClick={() => router.push(`/painel/produto/${p.slug}`)} style={{ flexShrink: 0, background: P.linen, border: `1px solid ${P.sand}60`, color: P.earth, padding: "0.4rem 0.75rem", fontFamily: T.sans, fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}>
                   Editar
                 </button>
@@ -272,12 +309,18 @@ export default function PainelPage() {
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       {imgAtual && <p style={{ fontFamily: T.sans, fontSize: "0.6rem", color: P.muted, marginBottom: "0.4rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{imgAtual}</p>}
+                      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                       <button
                         onClick={() => setPickerFor(pickerFor === chave ? null : chave)}
                         style={{ background: P.linen, border: `1px solid ${P.sand}60`, color: P.earth, padding: "0.4rem 0.875rem", fontFamily: T.sans, fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}
                       >
-                        {pickerFor === chave ? "Fechar" : imgAtual ? "Alterar" : "Escolher"}
+                        {pickerFor === chave ? "Fechar" : imgAtual ? "Das fotos" : "Escolher"}
                       </button>
+                      <label style={{ background: P.primary, color: "#fff", border: "none", padding: "0.4rem 0.875rem", fontFamily: T.sans, fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", display: "inline-block" }}>
+                        Carregar foto
+                        <input type="file" accept="image/*" style={{ display: "none" }} onChange={e => { const f = e.target.files?.[0]; if (f) uploadCatImg(chave, f); e.target.value = ""; }} />
+                      </label>
+                      </div>
                     </div>
                   </div>
 

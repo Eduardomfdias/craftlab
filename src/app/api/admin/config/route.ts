@@ -6,12 +6,10 @@ export const dynamic = "force-dynamic";
 const CHAVES = ["categoria_img_anilhas", "categoria_img_porta-chaves", "categoria_img_combos"] as const;
 
 export async function GET() {
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from("configuracoes")
     .select("chave, valor")
     .in("chave", CHAVES);
-
-  if (error) return NextResponse.json({}, { status: 500 });
 
   const config: Record<string, string> = {};
   for (const row of data ?? []) config[row.chave] = row.valor;
