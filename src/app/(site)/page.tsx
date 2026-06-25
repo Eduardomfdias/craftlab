@@ -50,7 +50,19 @@ export default function Home() {
   const [catImgs, setCatImgs] = useState<Record<string, string>>(DEFAULT_CAT_IMGS);
 
   useEffect(() => {
-    fetch("/api/produtos?destaque=true").then(r => r.json()).then(setFeatured).catch(() => {});
+    fetch("/api/produtos?destaque=true")
+      .then(r => r.json())
+      .then((data: Produto[]) => {
+        if (data.length > 0) {
+          setFeatured(data);
+        } else {
+          // fallback: primeiros 4 produtos disponíveis
+          return fetch("/api/produtos").then(r => r.json()).then((all: Produto[]) => {
+            setFeatured(all.slice(0, 4));
+          });
+        }
+      })
+      .catch(() => {});
     fetch("/api/config")
       .then(r => r.json())
       .then((data: Record<string, string>) => {
