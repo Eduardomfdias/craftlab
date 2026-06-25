@@ -51,7 +51,7 @@ export default function Home() {
 
   useEffect(() => {
     fetch("/api/produtos?destaque=true").then(r => r.json()).then(setFeatured).catch(() => {});
-    fetch("/api/admin/config")
+    fetch("/api/config")
       .then(r => r.json())
       .then((data: Record<string, string>) => {
         setCatImgs(prev => ({ ...prev, ...data }));
