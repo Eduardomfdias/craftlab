@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { ArrowRight, MoveRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getProdutosDestaque, type Produto } from "@/lib/produtos";
 
 const P = {
   primary: "#2E6B9E",
@@ -24,57 +26,10 @@ const T = {
 };
 
 
-const featured = [
-  {
-    id: "anilha-escutista-classica",
-    name: "Anilha Clássica",
-    desc: "Em corda de poliéster trançada à mão",
-    price: "4,50 €",
-    tag: "Best seller",
-    img: "/produtos/scout_anilha.png",
-  },
-  {
-    id: 2,
-    name: "Porta-chaves Nó Náutico",
-    desc: "Corda resistente com mosquetão",
-    price: "6,00 €",
-    tag: "Novo",
-    img: "/produtos/scout_keychain.png",
-  },
-  {
-    id: 3,
-    name: "Anilha Dupla Colorida",
-    desc: "Combinação de cores à escolha",
-    price: "7,00 €",
-    tag: null,
-    img: "/produtos/scout_hero.png",
-  },
-  {
-    id: "combo-escutista-completo",
-    name: "Combo Completo",
-    desc: "Anilha + Porta-chaves + Pulseira",
-    price: "15,00 €",
-    tag: "Oferta",
-    img: "/produtos/scout_process.png",
-  },
-];
-
 const categories = [
-  {
-    label: "Anilhas Escutistas",
-    sub: "Nós de poliéster perfeitos",
-    img: "/produtos/scout_anilha.png",
-  },
-  {
-    label: "Porta-chaves",
-    sub: "Nós náuticos e decorativos",
-    img: "/produtos/scout_keychain.png",
-  },
-  {
-    label: "Combos & Packs",
-    sub: "Conjuntos com desconto especial",
-    img: "/produtos/scout_hero.png",
-  },
+  { chave: "categoria_img_anilhas",      label: "Anilhas Escutistas", sub: "Nós de poliéster perfeitos" },
+  { chave: "categoria_img_porta-chaves", label: "Porta-chaves",       sub: "Nós náuticos e decorativos" },
+  { chave: "categoria_img_combos",       label: "Combos & Packs",     sub: "Conjuntos com desconto especial" },
 ];
 
 const perks = [
@@ -84,7 +39,26 @@ const perks = [
   { icon: "✦", text: "Cores à Escolha" },
 ];
 
+const DEFAULT_CAT_IMGS: Record<string, string> = {
+  "categoria_img_anilhas":      "/produtos/scout_anilha.png",
+  "categoria_img_porta-chaves": "/produtos/scout_keychain.png",
+  "categoria_img_combos":       "/produtos/scout_hero.png",
+};
+
 export default function Home() {
+  const [featured, setFeatured] = useState<Produto[]>([]);
+  const [catImgs, setCatImgs] = useState<Record<string, string>>(DEFAULT_CAT_IMGS);
+
+  useEffect(() => {
+    getProdutosDestaque().then(setFeatured);
+    fetch("/api/admin/config")
+      .then(r => r.json())
+      .then((data: Record<string, string>) => {
+        setCatImgs(prev => ({ ...prev, ...data }));
+      })
+      .catch(() => {});
+  }, []);
+
   return (
 
     <div style={{ width: "100%", overflowX: "hidden" }}>
@@ -150,9 +124,9 @@ export default function Home() {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1.75rem" }}>
             {featured.map((p) => (
-              <Link key={p.id} href={`/produto/${p.id}`} className="product-card" style={{ display: "block", textDecoration: "none" }}>
+              <Link key={p.slug} href={`/produto/${p.slug}`} className="product-card" style={{ display: "block", textDecoration: "none" }}>
                 <div style={{ position: "relative", aspectRatio: "3/4", overflow: "hidden", background: P.cream, marginBottom: "1.1rem" }}>
-                  <img src={p.img} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  <img src={p.fotos[0]} alt={p.nome} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                   {p.tag && (
                     <span style={{ position: "absolute", top: 12, left: 12, background: P.primary, color: "#fff", fontFamily: T.sans, fontSize: "0.52rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", padding: "0.3rem 0.75rem" }}>
                       {p.tag}
@@ -162,9 +136,9 @@ export default function Home() {
                     <span style={{ fontFamily: T.sans, fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: P.warmWhite }}>Ver Produto</span>
                   </div>
                 </div>
-                <p style={{ fontFamily: T.sans, fontSize: "0.85rem", fontWeight: 500, color: P.earth }}>{p.name}</p>
-                <p style={{ fontFamily: T.sans, fontSize: "0.75rem", color: P.rope, marginTop: "0.2rem", fontWeight: 300, fontStyle: "italic" }}>{p.desc}</p>
-                <p style={{ fontFamily: T.sans, fontSize: "0.85rem", color: P.primary, marginTop: "0.4rem", fontWeight: 500 }}>{p.price}</p>
+                <p style={{ fontFamily: T.sans, fontSize: "0.85rem", fontWeight: 500, color: P.earth }}>{p.nome}</p>
+                <p style={{ fontFamily: T.sans, fontSize: "0.75rem", color: P.rope, marginTop: "0.2rem", fontWeight: 300, fontStyle: "italic" }}>{p.descricao}</p>
+                <p style={{ fontFamily: T.sans, fontSize: "0.85rem", color: P.primary, marginTop: "0.4rem", fontWeight: 500 }}>{p.preco.toFixed(2).replace(".", ",")} €</p>
               </Link>
             ))}
           </div>
@@ -202,7 +176,7 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
             {categories.map((c) => (
               <Link key={c.label} href="/loja" className="group" style={{ position: "relative", aspectRatio: "4/5", overflow: "hidden", display: "block", textDecoration: "none" }}>
-                <img src={c.img} alt={c.label} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease", filter: "saturate(0.75)" }} className="group-hover:scale-105" />
+                <img src={catImgs[c.chave]} alt={c.label} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease", filter: "saturate(0.75)" }} className="group-hover:scale-105" />
                 <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, ${P.dark}e0 0%, ${P.dark}10 55%, transparent 100%)` }} />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.75rem" }}>
                   <p style={{ fontFamily: T.serif, fontStyle: "italic", color: P.warmWhite, fontSize: "1.9rem", lineHeight: 1, marginBottom: "0.35rem" }}>{c.label}</p>
@@ -287,7 +261,7 @@ export default function Home() {
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
               Instagram
             </a>
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2rem", background: "transparent", border: `1px solid ${P.primary}`, color: P.warmWhite, fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", transition: "background 0.3s" }} onMouseEnter={e => (e.currentTarget.style.background = "rgba(46,107,158,0.15)")} onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
+            <a href="https://www.facebook.com/profile.php?id=61588184506129" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2rem", background: "transparent", border: `1px solid ${P.primary}`, color: P.warmWhite, fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", transition: "background 0.3s" }} onMouseEnter={e => (e.currentTarget.style.background = "rgba(46,107,158,0.15)")} onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
               Facebook
             </a>

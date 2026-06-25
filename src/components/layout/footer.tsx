@@ -86,7 +86,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: T.sans, fontSize: "0.82rem", fontWeight: 300, color: `${P.sand}50`, textDecoration: "none" }}>
+                <a href="https://www.facebook.com/profile.php?id=61588184506129" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: T.sans, fontSize: "0.82rem", fontWeight: 300, color: `${P.sand}50`, textDecoration: "none" }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
                   Facebook
                 </a>

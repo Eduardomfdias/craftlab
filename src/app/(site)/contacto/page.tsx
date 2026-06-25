@@ -37,17 +37,42 @@ const faqs = [
   { q: "Fazem peças para grupos de escuteiros?", a: "Com muito gosto! Para encomendas de grupo temos preços especiais. Entra em contacto para um orçamento." },
 ];
 
+const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID;
+
 export default function ContactoPage() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
   const [form, setForm] = useState({ nome: "", email: "", assunto: "Encomenda", mensagem: "" });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const emailLine = form.email ? `\nEmail: ${form.email}` : "";
-    const texto = `Olá! Sou o/a ${form.nome}.${emailLine}\nAssunto: ${form.assunto}\nMensagem:\n${form.mensagem}`;
-    const url = `https://wa.me/351911799876?text=${encodeURIComponent(texto)}`;
-    window.open(url, '_blank');
-    setSent(true);
+
+    if (FORMSPREE_ID) {
+      setSending(true);
+      try {
+        const r = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            nome: form.nome,
+            email: form.email,
+            assunto: form.assunto,
+            mensagem: form.mensagem,
+          }),
+        });
+        if (!r.ok) throw new Error("Erro ao enviar");
+        setSent(true);
+      } catch {
+        alert("Erro ao enviar. Tenta novamente ou contacta-nos pelo WhatsApp.");
+      } finally {
+        setSending(false);
+      }
+    } else {
+      const emailLine = form.email ? `\nEmail: ${form.email}` : "";
+      const texto = `Olá! Sou o/a ${form.nome}.${emailLine}\nAssunto: ${form.assunto}\nMensagem:\n${form.mensagem}`;
+      window.open(`https://wa.me/351911799876?text=${encodeURIComponent(texto)}`, "_blank");
+      setSent(true);
+    }
   };
 
   const inputStyle = {
@@ -229,9 +254,10 @@ export default function ContactoPage() {
 
                 <button
                   type="submit"
-                  style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem", background: P.primary, color: "#fff", padding: "1rem 2rem", fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: "pointer" }}
+                  disabled={sending}
+                  style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.6rem", background: P.primary, color: "#fff", padding: "1rem 2rem", fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase", border: "none", cursor: sending ? "default" : "pointer", opacity: sending ? 0.7 : 1 }}
                 >
-                  Enviar por WhatsApp <ArrowRight size={14} />
+                  {sending ? "A enviar..." : FORMSPREE_ID ? <><Send size={14} /> Enviar mensagem</> : <>Enviar por WhatsApp <ArrowRight size={14} /></>}
                 </button>
               </form>
             )}

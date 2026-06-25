@@ -19,6 +19,12 @@ type Produto = {
   destaque: boolean; disponivel: boolean; fotos: string[];
 };
 
+const CAT_CONFIG = [
+  { chave: "categoria_img_anilhas",      label: "Anilhas Escutistas" },
+  { chave: "categoria_img_porta-chaves", label: "Porta-chaves" },
+  { chave: "categoria_img_combos",       label: "Combos & Packs" },
+] as const;
+
 export default function PainelPage() {
   const router = useRouter();
   const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -30,6 +36,9 @@ export default function PainelPage() {
   const [editingStock, setEditingStock] = useState<string | null>(null);
   const [stockVal, setStockVal] = useState("");
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  const [catImgs, setCatImgs] = useState<Record<string, string>>({});
+  const [pickerFor, setPickerFor] = useState<string | null>(null);
+  const [savingCat, setSavingCat] = useState(false);
 
   const flash = (msg: string, ok = true) => {
     setToast({ msg, ok });
@@ -49,7 +58,30 @@ export default function PainelPage() {
     }
   };
 
-  useEffect(() => { carregar(); }, []);
+  useEffect(() => {
+    carregar();
+    fetch("/api/admin/config")
+      .then(r => r.json())
+      .then(setCatImgs)
+      .catch(() => {});
+  }, []);
+
+  const salvarCatImgs = async () => {
+    setSavingCat(true);
+    try {
+      const r = await fetch("/api/admin/config", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(catImgs),
+      });
+      if (!r.ok) throw new Error("Erro ao guardar");
+      flash("Imagens das categorias guardadas!");
+    } catch (e) {
+      flash((e as Error).message, false);
+    } finally {
+      setSavingCat(false);
+    }
+  };
 
   const filtered = useMemo(() => produtos.filter(p => {
     if (query && !p.nome.toLowerCase().includes(query.toLowerCase())) return false;
@@ -213,6 +245,75 @@ export default function PainelPage() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* ═══ IMAGENS DAS CATEGORIAS ════════════════════════ */}
+      <div style={{ maxWidth: 680, margin: "0 auto", padding: "0 1rem 3rem" }}>
+        <div style={{ borderTop: `1px solid ${P.sand}50`, paddingTop: "1.5rem", marginTop: "0.5rem" }}>
+          <p style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: "1.1rem", color: P.earth, marginBottom: "0.35rem" }}>Explorar Loja</p>
+          <p style={{ fontFamily: T.sans, fontSize: "0.68rem", color: P.muted, marginBottom: "1.25rem", letterSpacing: "0.04em" }}>
+            Escolhe a imagem de fundo de cada categoria na página inicial.
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.25rem" }}>
+            {CAT_CONFIG.map(({ chave, label }) => {
+              const imgAtual = catImgs[chave];
+              const todasFotos = produtos.flatMap(p => p.fotos).filter(Boolean);
+              const fotosUnicas = [...new Set(todasFotos)];
+              return (
+                <div key={chave} style={{ background: "#fff", border: `1px solid ${P.sand}50`, padding: "0.875rem 1rem" }}>
+                  <p style={{ fontFamily: T.sans, fontSize: "0.72rem", fontWeight: 500, color: P.earth, marginBottom: "0.75rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{label}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
+                    <div style={{ width: 72, height: 72, background: P.linen, flexShrink: 0, overflow: "hidden", border: `1px solid ${P.sand}40` }}>
+                      {imgAtual
+                        ? <img src={imgAtual} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem" }}>🖼️</div>
+                      }
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      {imgAtual && <p style={{ fontFamily: T.sans, fontSize: "0.6rem", color: P.muted, marginBottom: "0.4rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{imgAtual}</p>}
+                      <button
+                        onClick={() => setPickerFor(pickerFor === chave ? null : chave)}
+                        style={{ background: P.linen, border: `1px solid ${P.sand}60`, color: P.earth, padding: "0.4rem 0.875rem", fontFamily: T.sans, fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}
+                      >
+                        {pickerFor === chave ? "Fechar" : imgAtual ? "Alterar" : "Escolher"}
+                      </button>
+                    </div>
+                  </div>
+
+                  {pickerFor === chave && (
+                    <div style={{ marginTop: "0.875rem", borderTop: `1px solid ${P.sand}30`, paddingTop: "0.875rem" }}>
+                      {fotosUnicas.length === 0
+                        ? <p style={{ fontFamily: T.sans, fontSize: "0.7rem", color: P.muted }}>Sem fotos de produtos disponíveis.</p>
+                        : (
+                          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(64px, 1fr))", gap: "0.5rem", maxHeight: 240, overflowY: "auto" }}>
+                            {fotosUnicas.map(foto => (
+                              <div
+                                key={foto}
+                                onClick={() => { setCatImgs(prev => ({ ...prev, [chave]: foto })); setPickerFor(null); }}
+                                style={{ aspectRatio: "1", overflow: "hidden", cursor: "pointer", border: catImgs[chave] === foto ? `2px solid ${P.primary}` : `2px solid transparent`, boxSizing: "border-box" as const }}
+                              >
+                                <img src={foto} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                              </div>
+                            ))}
+                          </div>
+                        )
+                      }
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <button
+            onClick={salvarCatImgs}
+            disabled={savingCat}
+            style={{ background: P.primary, color: "#fff", border: "none", padding: "0.7rem 1.5rem", fontFamily: T.sans, fontSize: "0.62rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", cursor: savingCat ? "default" : "pointer", opacity: savingCat ? 0.6 : 1 }}
+          >
+            {savingCat ? "A guardar..." : "Guardar Imagens"}
+          </button>
+        </div>
       </div>
     </div>
   );
