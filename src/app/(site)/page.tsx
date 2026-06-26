@@ -27,9 +27,9 @@ const T = {
 
 
 const categories = [
-  { chave: "categoria_img_anilhas",      label: "Anilhas Escutistas", sub: "Nós de poliéster perfeitos",      href: "/loja?categoria=anilhas" },
-  { chave: "categoria_img_porta-chaves", label: "Porta-chaves",       sub: "Nós náuticos e decorativos",      href: "/loja?categoria=porta-chaves" },
-  { chave: "categoria_img_combos",       label: "Combos & Packs",     sub: "Conjuntos com desconto especial", href: "/loja?categoria=combos" },
+  { chave: "categoria_img_anilhas", label: "Anilhas Escutistas", sub: "Nós de poliéster perfeitos", href: "/loja?categoria=anilhas" },
+  { chave: "categoria_img_porta-chaves", label: "Porta-chaves", sub: "Nós náuticos e decorativos", href: "/loja?categoria=porta-chaves" },
+  { chave: "categoria_img_combos", label: "Combos & Packs", sub: "Conjuntos com desconto especial", href: "/loja?categoria=combos" },
 ];
 
 const perks = [
@@ -40,9 +40,9 @@ const perks = [
 ];
 
 const DEFAULT_CAT_IMGS: Record<string, string> = {
-  "categoria_img_anilhas":      "/produtos/scout_anilha.png",
+  "categoria_img_anilhas": "/produtos/scout_anilha.png",
   "categoria_img_porta-chaves": "/produtos/scout_keychain.png",
-  "categoria_img_combos":       "/produtos/scout_hero.png",
+  "categoria_img_combos": "/produtos/scout_hero.png",
 };
 
 export default function Home() {
@@ -53,13 +53,13 @@ export default function Home() {
     fetch("/api/produtos?destaque=true")
       .then(r => r.json())
       .then((data: Produto[]) => setFeatured(data))
-      .catch(() => {});
+      .catch(() => { });
     fetch("/api/config")
       .then(r => r.json())
       .then((data: Record<string, string>) => {
         setCatImgs(prev => ({ ...prev, ...data }));
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (
@@ -81,7 +81,7 @@ export default function Home() {
           </div>
 
           <h1 className="hero-title" style={{ fontFamily: T.serif, fontStyle: "italic", fontWeight: 400, fontSize: "clamp(3rem, 7.5vw, 6.2rem)", lineHeight: 1.05, color: P.warmWhite, letterSpacing: "-0.01em", marginBottom: "1.5rem" }}>
-            Cada Nó tem<br />uma história.
+            Cada Nó tem<br />uma História.
           </h1>
 
           <p className="hero-sub" style={{ fontFamily: T.sans, fontWeight: 300, fontSize: "1.05rem", color: `${P.warmWhite}b8`, letterSpacing: "0.05em", maxWidth: 500, margin: "0 auto 2.75rem", lineHeight: 1.75 }}>
@@ -183,7 +183,6 @@ export default function Home() {
                 <div style={{ position: "absolute", inset: 0, background: `linear-gradient(to top, ${P.dark}e0 0%, ${P.dark}10 55%, transparent 100%)` }} />
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.75rem" }}>
                   <p style={{ fontFamily: T.serif, fontStyle: "italic", color: P.warmWhite, fontSize: "1.9rem", lineHeight: 1, marginBottom: "0.35rem" }}>{c.label}</p>
-                  <p style={{ fontFamily: T.sans, fontSize: "0.7rem", color: `${P.sand}99`, fontWeight: 300, marginBottom: "0.75rem" }}>{c.sub}</p>
                   <span style={{ fontFamily: T.sans, fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: `${P.sand}77`, display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
                     Ver tudo <ArrowRight size={11} />
                   </span>
@@ -261,11 +260,11 @@ export default function Home() {
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
             <a href="https://www.instagram.com/craftlab.ed" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2rem", background: P.primary, color: P.warmWhite, fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", transition: "background 0.3s" }} onMouseEnter={e => (e.currentTarget.style.background = P.primaryH)} onMouseLeave={e => (e.currentTarget.style.background = P.primary)}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" /><circle cx="12" cy="12" r="5" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
               Instagram
             </a>
             <a href="https://www.facebook.com/profile.php?id=61588184506129" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2rem", background: "transparent", border: `1px solid ${P.primary}`, color: P.warmWhite, fontFamily: T.sans, fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", transition: "background 0.3s" }} onMouseEnter={e => (e.currentTarget.style.background = "rgba(46,107,158,0.15)")} onMouseLeave={e => (e.currentTarget.style.background = "transparent")}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
               Facebook
             </a>
           </div>
