@@ -187,10 +187,6 @@ export default function EditarProdutoPage({ params }: { params: { slug: string }
               <input type="checkbox" checked={form.disponivel} onChange={e => f("disponivel", e.target.checked)} style={{ width: 18, height: 18, accentColor: P.primary }} />
               Disponível
             </label>
-            <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", fontSize: "0.8rem", color: P.earth }}>
-              <input type="checkbox" checked={form.destaque} onChange={e => f("destaque", e.target.checked)} style={{ width: 18, height: 18, accentColor: P.primary }} />
-              Em destaque
-            </label>
           </div>
 
           <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>

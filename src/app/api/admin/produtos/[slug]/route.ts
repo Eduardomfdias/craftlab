@@ -13,12 +13,13 @@ export async function PUT(req: NextRequest, { params }: { params: { slug: string
   const existing = await getProdutoStorage(params.slug);
   if (!existing) return NextResponse.json({ error: "Não encontrado" }, { status: 404 });
   const body = await req.json();
+  const merged = { ...existing, ...body };
   try {
-    await writeProduto(params.slug, body);
+    await writeProduto(params.slug, merged);
   } catch (e) {
     return NextResponse.json({ error: (e as Error).message ?? "Erro ao guardar" }, { status: 500 });
   }
-  return NextResponse.json({ slug: params.slug, ...body });
+  return NextResponse.json({ slug: params.slug, ...merged });
 }
 
 export async function DELETE(_req: NextRequest, { params }: { params: { slug: string } }) {

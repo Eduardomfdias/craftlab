@@ -52,16 +52,7 @@ export default function Home() {
   useEffect(() => {
     fetch("/api/produtos?destaque=true")
       .then(r => r.json())
-      .then((data: Produto[]) => {
-        if (data.length > 0) {
-          setFeatured(data);
-        } else {
-          // fallback: primeiros 4 produtos disponíveis
-          return fetch("/api/produtos").then(r => r.json()).then((all: Produto[]) => {
-            setFeatured(all.slice(0, 4));
-          });
-        }
-      })
+      .then((data: Produto[]) => setFeatured(data))
       .catch(() => {});
     fetch("/api/config")
       .then(r => r.json())
@@ -122,7 +113,7 @@ export default function Home() {
       </div>
 
       {/* ═══ FEATURED PRODUCTS ══════════════════════════ */}
-      <section style={{ background: P.bg, padding: "7rem 0" }}>
+      {featured.length > 0 && <section style={{ background: P.bg, padding: "7rem 0" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem" }}>
           <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "4rem", gap: "1rem" }}>
             <div>
@@ -155,7 +146,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* ═══ PERSONALIZAÇÃO BANNER ══════════════════════ */}
       <section style={{ background: P.primary, padding: "4rem 1.5rem" }}>
@@ -209,12 +200,12 @@ export default function Home() {
           {/* Image collage */}
           <div style={{ position: "relative", height: 520 }}>
             <img
-              src="/produtos/scout_process.png"
+              src={catImgs["historia_img_principal"] || "/produtos/scout_process.png"}
               alt="Processo artesanal"
               style={{ position: "absolute", top: 0, left: 0, width: "68%", height: "68%", objectFit: "cover", filter: "saturate(0.7)" }}
             />
             <img
-              src="/produtos/scout_anilha.png"
+              src={catImgs["historia_img_secundaria"] || "/produtos/scout_anilha.png"}
               alt="Anilha de corda"
               style={{ position: "absolute", bottom: 0, right: 0, width: "54%", height: "54%", objectFit: "cover", border: `4px solid ${P.bg}`, filter: "saturate(0.7)" }}
             />

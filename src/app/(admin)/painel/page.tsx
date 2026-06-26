@@ -25,6 +25,11 @@ const CAT_CONFIG = [
   { chave: "categoria_img_combos",       label: "Combos & Packs" },
 ] as const;
 
+const HISTORIA_CONFIG = [
+  { chave: "historia_img_principal", label: "Imagem principal (maior, fundo)" },
+  { chave: "historia_img_secundaria", label: "Imagem secundária (menor, frente)" },
+] as const;
+
 export default function PainelPage() {
   const router = useRouter();
   const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -150,10 +155,11 @@ export default function PainelPage() {
       const r = await fetch(`/api/admin/produtos/${slug}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...produto, destaque: novoDestaque }),
+        body: JSON.stringify({ destaque: novoDestaque }),
       });
       if (!r.ok) throw new Error("Erro ao guardar");
       setProdutos(prev => prev.map(p => p.slug === slug ? { ...p, destaque: novoDestaque } : p));
+      flash(novoDestaque ? "Produto em destaque ★" : "Destaque removido");
     } catch (e) {
       flash((e as Error).message, false);
     }
@@ -336,6 +342,75 @@ export default function PainelPage() {
                         Carregar foto
                         <input type="file" accept="image/*" style={{ display: "none" }} onChange={e => { const f = e.target.files?.[0]; if (f) uploadCatImg(chave, f); e.target.value = ""; }} />
                       </label>
+                      </div>
+                    </div>
+                  </div>
+
+                  {pickerFor === chave && (
+                    <div style={{ marginTop: "0.875rem", borderTop: `1px solid ${P.sand}30`, paddingTop: "0.875rem" }}>
+                      {fotosUnicas.length === 0
+                        ? <p style={{ fontFamily: T.sans, fontSize: "0.7rem", color: P.muted }}>Sem fotos de produtos disponíveis.</p>
+                        : (
+                          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(64px, 1fr))", gap: "0.5rem", maxHeight: 240, overflowY: "auto" }}>
+                            {fotosUnicas.map(foto => (
+                              <div
+                                key={foto}
+                                onClick={() => { saveCatImg(chave, foto); setPickerFor(null); }}
+                                style={{ aspectRatio: "1", overflow: "hidden", cursor: "pointer", border: catImgs[chave] === foto ? `2px solid ${P.primary}` : `2px solid transparent`, boxSizing: "border-box" as const }}
+                              >
+                                <img src={foto} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                              </div>
+                            ))}
+                          </div>
+                        )
+                      }
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <p style={{ fontFamily: T.sans, fontSize: "0.65rem", color: P.muted, fontStyle: "italic" }}>
+            As imagens são guardadas automaticamente ao selecionar.
+          </p>
+        </div>
+
+        {/* ═══ IMAGENS DA SECÇÃO "FEITO À MÃO" ══════════════ */}
+        <div style={{ borderTop: `1px solid ${P.sand}50`, paddingTop: "1.5rem", marginTop: "1.5rem" }}>
+          <p style={{ fontFamily: T.serif, fontStyle: "italic", fontSize: "1.1rem", color: P.earth, marginBottom: "0.35rem" }}>Feito à mão, para ti!</p>
+          <p style={{ fontFamily: T.sans, fontSize: "0.68rem", color: P.muted, marginBottom: "1.25rem", letterSpacing: "0.04em" }}>
+            Escolhe as imagens da secção "A Nossa História" na página inicial.
+          </p>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", marginBottom: "1.25rem" }}>
+            {HISTORIA_CONFIG.map(({ chave, label }) => {
+              const imgAtual = catImgs[chave];
+              const todasFotos = produtos.flatMap(p => p.fotos).filter(Boolean);
+              const fotosUnicas = [...new Set(todasFotos)];
+              return (
+                <div key={chave} style={{ background: "#fff", border: `1px solid ${P.sand}50`, padding: "0.875rem 1rem" }}>
+                  <p style={{ fontFamily: T.sans, fontSize: "0.72rem", fontWeight: 500, color: P.earth, marginBottom: "0.75rem", letterSpacing: "0.06em", textTransform: "uppercase" }}>{label}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.875rem" }}>
+                    <div style={{ width: 72, height: 72, background: P.linen, flexShrink: 0, overflow: "hidden", border: `1px solid ${P.sand}40` }}>
+                      {imgAtual
+                        ? <img src={imgAtual} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        : <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5rem" }}>🖼️</div>
+                      }
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      {imgAtual && <p style={{ fontFamily: T.sans, fontSize: "0.6rem", color: P.muted, marginBottom: "0.4rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{imgAtual}</p>}
+                      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                        <button
+                          onClick={() => setPickerFor(pickerFor === chave ? null : chave)}
+                          style={{ background: P.linen, border: `1px solid ${P.sand}60`, color: P.earth, padding: "0.4rem 0.875rem", fontFamily: T.sans, fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer" }}
+                        >
+                          {pickerFor === chave ? "Fechar" : imgAtual ? "Das fotos" : "Escolher"}
+                        </button>
+                        <label style={{ background: P.primary, color: "#fff", border: "none", padding: "0.4rem 0.875rem", fontFamily: T.sans, fontSize: "0.6rem", fontWeight: 500, letterSpacing: "0.12em", textTransform: "uppercase", cursor: "pointer", display: "inline-block" }}>
+                          Carregar foto
+                          <input type="file" accept="image/*" style={{ display: "none" }} onChange={e => { const f = e.target.files?.[0]; if (f) uploadCatImg(chave, f); e.target.value = ""; }} />
+                        </label>
                       </div>
                     </div>
                   </div>
