@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 
 export const dynamic = "force-dynamic";
 
-const CHAVES = ["categoria_img_anilhas", "categoria_img_porta-chaves", "categoria_img_combos", "historia_img_principal", "historia_img_secundaria"] as const;
+const CHAVES = ["categoria_img_anilhas", "categoria_img_porta-chaves", "categoria_img_combos", "historia_img_principal", "historia_img_secundaria", "loja_img_capa"] as const;
 
 export async function GET() {
   const { data } = await supabase

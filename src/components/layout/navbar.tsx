@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { ShoppingBag, Menu, X } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 
@@ -27,16 +28,22 @@ const links = [
   { href: "/contacto", label: "Contacto" },
 ];
 
+const HERO_PAGES = ["/", "/loja", "/sobre", "/contacto"];
+
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const hasHero = HERO_PAGES.includes(pathname);
+  const [scrolled, setScrolled] = useState(!hasHero);
   const [open, setOpen] = useState(false);
   const { count, setOpen: openCart } = useCart();
 
   useEffect(() => {
+    if (!hasHero) return;
     const fn = () => setScrolled(window.scrollY > 40);
+    fn();
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
-  }, []);
+  }, [hasHero]);
 
   return (
     <>

@@ -30,9 +30,12 @@ const categorias = [
 ];
 
 
+const DEFAULT_CAPA = "https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1920&auto=format&fit=crop";
+
 export default function LojaPage() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
   const [loading, setLoading] = useState(true);
+  const [capaImg, setCapaImg] = useState(DEFAULT_CAPA);
   const { addItem } = useCart();
   const [catAtiva, setCatAtiva] = useState("todos");
 
@@ -43,6 +46,12 @@ export default function LojaPage() {
     fetch("/api/produtos")
       .then(r => r.json())
       .then(data => { setProdutos(data); setLoading(false); });
+    fetch("/api/config")
+      .then(r => r.json())
+      .then((cfg: Record<string, string>) => {
+        if (cfg.loja_img_capa) setCapaImg(cfg.loja_img_capa);
+      })
+      .catch(() => {});
   }, []);
 
   const filtrados = catAtiva === "todos"
@@ -58,7 +67,7 @@ export default function LojaPage() {
       {/* ── HEADER ─────────────────────────────────── */}
       <section style={{ paddingTop: 96, background: P.dark, minHeight: 280, display: "flex", alignItems: "center", position: "relative" }}>
         <img
-          src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1920&auto=format&fit=crop"
+          src={capaImg}
           alt="Loja"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.15) saturate(0.4)" }}
         />
