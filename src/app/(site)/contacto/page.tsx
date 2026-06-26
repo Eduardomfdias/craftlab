@@ -113,7 +113,7 @@ export default function ContactoPage() {
             Fala connosco
           </div>
           <h1 style={{ fontFamily: T.serif, fontStyle: "italic", fontWeight: 400, fontSize: "clamp(3rem,6vw,5rem)", color: P.warmWhite, lineHeight: 1.1, maxWidth: 580 }}>
-            Conta-nos a tua história.
+            Entra em contacto.
           </h1>
         </div>
       </section>
