@@ -84,9 +84,6 @@ export default function Home() {
             Cada Nó tem<br />uma História.
           </h1>
 
-          <p className="hero-sub" style={{ fontFamily: T.sans, fontWeight: 300, fontSize: "1.05rem", color: `${P.warmWhite}b8`, letterSpacing: "0.05em", maxWidth: 500, margin: "0 auto 2.75rem", lineHeight: 1.75 }}>
-            Acessórios em corda, com qualidade, rigor e dedicação.
-          </p>
 
           <div className="hero-cta" style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
             <Link href="/loja" style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", background: P.primary, color: "#fff", padding: "1.1rem 2.2rem", fontFamily: T.sans, fontSize: "0.65rem", fontWeight: 500, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none", transition: "background 0.3s" }} onMouseEnter={e => (e.currentTarget.style.background = P.primaryH)} onMouseLeave={e => (e.currentTarget.style.background = P.primary)}>
